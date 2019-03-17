@@ -60,7 +60,7 @@ matrix:
     - os: linux
       env: GPAC_CONFIGURE_OPTIONS="--enable-debug --use-{js,mad,xvid,ogg,vorbis,theora,openjpeg,a52}=no --disable-{streaming,isoff-frag,isoff-hint,isoff-write,loader-xmt,loader-bt,loader-isoff,scene-encode,mcrypt,od-dump,scene-dump,scene-stats,swf,export,import,m2ps,ogg,qtvr,seng,smgr,x3d,3d,ssl,jack,pulse,odf,isoff,m2ts-mux,dvbx,saf,vobsub,ttxt,od-parse,atsc,avi}"
 script:
-  - ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make && $DOINSTALL && $DOTRAVIS
+  - ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j && $DOINSTALL && $DOTRAVIS
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then bash <(curl -s https://codecov.io/bash) ; fi
 
