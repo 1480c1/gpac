@@ -1,5 +1,8 @@
 language: c
-compiler: gcc
+compiler:
+  - clang
+  - gcc
+dist: xenial
 os:
   - linux
   - osx
@@ -8,13 +11,10 @@ addons:
   apt:
     packages:
     - binutils-mingw-w64-{i686,x86-64}
-    - build-essential
     - debhelper
     - devscripts
-    - dpkg-dev
     - dvb-apps
     - fakeroot
-    - g++
     - g{cc,++}-mingw-w64-{i686,x86-64}
     - lcov
     - lib{a52-0.7.4,asound2,av{codec,device,format,util},faad,freetype6,gl1-mesa,jack,jpeg62,mad0,mozjs185,ogg,openjpeg,png12,pulse,sdl1.2,ssl,swscale,theora,vorbis,xv{,idcore}}-dev
