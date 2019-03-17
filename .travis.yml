@@ -48,10 +48,11 @@ matrix:
       env: GPAC_CONFIGURE_OPTIONS="--enable-mem-track" DOINSTALL="sudo make install" AUDIODEV=null
     - os: linux
       before_script:
-        - sh -e /etc/init.d/xvfb start
+        - "export DISPLAY=:99.0"
+        - "export DISPLAY=:99.0"
         - sleep 3 # give xvfb some time to start
         - glxinfo # check glx status
-      env: GPAC_CONFIGURE_OPTIONS="--enable-{mem-track,gcov}" DOINSTALL="sudo make install" DOTRAVIS="make travis" AUDIODEV=null DISPLAY=:99.0
+      env: GPAC_CONFIGURE_OPTIONS="--enable-{mem-track,gcov}" DOINSTALL="sudo make install" DOTRAVIS="make travis" AUDIODEV=null
     - os: linux
       env: GPAC_CONFIGURE_OPTIONS="--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=i686-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
     - os: linux
