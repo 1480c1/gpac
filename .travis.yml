@@ -7,54 +7,53 @@ cache: ccache
 addons:
   apt:
     packages:
+    - binutils-mingw-w64-i686
+    - binutils-mingw-w64-x86-64
     - build-essential
-    - fakeroot
-    - dpkg-dev
-    - devscripts
     - debhelper
-    - pkg-config
+    - devscripts
+    - dpkg-dev
+    - dvb-apps
+    - fakeroot
     - g++
-    - mesa-utils
-    - zlib1g-dev
-    - libfreetype6-dev
-    - libjpeg62-dev
-    - libpng12-dev
-    - libopenjpeg-dev
-    - libmad0-dev
-    - libfaad-dev
-    - libogg-dev
-    - libvorbis-dev
-    - libtheora-dev
+    - gcc-mingw-w64-i686
+    - gcc-mingw-w64-x86-64
+    - g++-mingw-w64-i686
+    - g++-mingw-w64-x86-64
+    - lcov
     - liba52-0.7.4-dev
+    - libasound2-dev
     - libavcodec-dev
+    - libavcodec-extra
+    - libavdevice-dev
     - libavformat-dev
     - libavutil-dev
-    - libswscale-dev
-    - libavdevice-dev
-    - libxv-dev
-    - x11proto-video-dev
+    - libfaad-dev
+    - libfreetype6-dev
     - libgl1-mesa-dev
-    - x11proto-gl-dev
-    - linux-sound-base
-    - libxvidcore-dev
-    - libssl-dev
     - libjack-dev
-    - libasound2-dev
+    - libjpeg62-dev
+    - libmad0-dev
+    - libmozjs185-dev
+    - libogg-dev
+    - libopenjpeg-dev
+    - libpng12-dev
     - libpulse-dev
     - libsdl1.2-dev
-    - dvb-apps
-    - libavcodec-extra
-    - libavutil-dev
-    - libmozjs185-dev
-    - gcc-mingw-w64-i686
-    - g++-mingw-w64-i686
-    - binutils-mingw-w64-i686
-    - gcc-mingw-w64-x86-64
-    - g++-mingw-w64-x86-64
-    - binutils-mingw-w64-x86-64
+    - libssl-dev
+    - libswscale-dev
+    - libtheora-dev
+    - libvorbis-dev
+    - libxv-dev
+    - libxvidcore-dev
+    - linux-sound-base
+    - mesa-utils
     - mingw-w64-x86-64-dev
-    - lcov
+    - pkg-config
     - time
+    - x11proto-gl-dev
+    - x11proto-video-dev
+    - zlib1g-dev
   homebrew:
     packages:
     - gnu-time
