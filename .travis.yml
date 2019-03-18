@@ -6,35 +6,34 @@ os:
 cache: ccache
 addons:
   apt:
+    update: true
     packages:
-    - debhelper
-    - devscripts
-    - dvb-apps
-    - fakeroot
-    - lcov
-    - lib{a52-0.7.4,asound2,av{codec,device,format,util},faad,gl1-mesa,jack,jpeg62,mad0,mozjs185,ogg,openjpeg,pulse,sdl1.2,ssl,swscale,theora,vorbis,xv{,idcore}}-dev
-    - libavcodec-extra
-    - linux-sound-base
-    - mesa-utils
-    - x11proto-{gl,video}-dev
+      - debhelper
+      - devscripts
+      - dvb-apps
+      - fakeroot
+      - lcov
+      - lib{a52-0.7.4,asound2,av{codec,device,format,util},faad,gl1-mesa,jack,jpeg62,mad0,mozjs185,ogg,openjpeg,pulse,sdl1.2,ssl,swscale,theora,vorbis,xv{,idcore}}-dev
+      - libavcodec-extra
+      - linux-sound-base
+      - mesa-utils
+      - x11proto-{gl,video}-dev
   homebrew:
+    update: true
     packages:
-    - faad2
-    - ffmpeg
-    - freetype
-    - gnu-time
-    - gnu-sed
-    - gnu-tar
-    - lcov
-    - libmad
-    - libogg
-    - openjpeg
-    - sdl
-    - spidermonkey
-    - theora
-before_install:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get -y update -qq ; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+      - faad2
+      - ffmpeg
+      - freetype
+      - gnu-time
+      - gnu-sed
+      - gnu-tar
+      - lcov
+      - libmad
+      - libogg
+      - openjpeg
+      - sdl
+      - spidermonkey
+      - theora
 env:
   - GPAC_CONFIGURE_OPTIONS="--prefix=build/mp4box --enable-debug --static-mp4box" DOINSTALL="make install"
   - GPAC_CONFIGURE_OPTIONS="--enable-debug --static-modules"
@@ -59,7 +58,8 @@ matrix:
     - os: linux
       env: GPAC_CONFIGURE_OPTIONS="--enable-debug --use-{js,mad,xvid,ogg,vorbis,theora,openjpeg,a52}=no --disable-{streaming,isoff-frag,isoff-hint,isoff-write,loader-xmt,loader-bt,loader-isoff,scene-encode,mcrypt,od-dump,scene-dump,scene-stats,swf,export,import,m2ps,ogg,qtvr,seng,smgr,x3d,3d,ssl,jack,pulse,odf,isoff,m2ts-mux,dvbx,saf,vobsub,ttxt,od-parse,atsc,avi}"
 script:
-  - ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j && $DOINSTALL && $DOTRAVIS
+  - if [ $TRAVIS_OS_NAME = linux ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j$(nproc) && $DOINSTALL && $DOTRAVIS; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j$(sysctl -n hw.ncpu) && $DOINSTALL && $DOTRAVIS; fi
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then bash <(curl -s https://codecov.io/bash) ; fi
 
