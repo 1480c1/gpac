@@ -23,17 +23,13 @@ addons:
     packages:
       - faad2
       - ffmpeg
-      - freetype
       - gnu-time
       - gnu-sed
       - gnu-tar
       - lcov
       - libmad
-      - libogg
-      - openjpeg
       - sdl
       - spidermonkey
-      - theora
 env:
   - GPAC_CONFIGURE_OPTIONS="--prefix=build/mp4box --enable-debug --static-mp4box" DOINSTALL="make install"
   - GPAC_CONFIGURE_OPTIONS="--enable-debug --static-modules"
@@ -48,15 +44,16 @@ matrix:
         - sleep 3 # give xvfb some time to start
         - glxinfo # check glx status
       env: GPAC_CONFIGURE_OPTIONS="--enable-{mem-track,gcov}" DOINSTALL="sudo make install" DOTRAVIS="make travis" AUDIODEV=null
+    - env: GPAC_CONFIGURE_OPTIONS="--prefix=build/all --enable-debug --disable-all" DOINSTALL="sudo make install"
+    - env: GPAC_CONFIGURE_OPTIONS="--enable-debug --use-{js,mad,xvid,ogg,vorbis,theora,openjpeg,a52}=no --disable-{streaming,isoff-frag,isoff-hint,isoff-write,loader-xmt,loader-bt,loader-isoff,scene-encode,mcrypt,od-dump,scene-dump,scene-stats,swf,export,import,m2ps,ogg,qtvr,seng,smgr,x3d,3d,ssl,jack,pulse,odf,isoff,m2ts-mux,dvbx,saf,vobsub,ttxt,od-parse,atsc,avi}"
     - os: linux
       env: GPAC_CONFIGURE_OPTIONS="--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=i686-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
     - os: windows
       env: GPAC_CONFIGURE_OPTIONS="--{build,host,target}=x86_64-w64-mingw32 --disable-shared --enable-static --enable-debug --static-mp4box"
       #--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
-    - env: GPAC_CONFIGURE_OPTIONS="--prefix=build/all --enable-debug --disable-all" DOINSTALL="sudo make install"
-    - env: GPAC_CONFIGURE_OPTIONS="--enable-debug --use-{js,mad,xvid,ogg,vorbis,theora,openjpeg,a52}=no --disable-{streaming,isoff-frag,isoff-hint,isoff-write,loader-xmt,loader-bt,loader-isoff,scene-encode,mcrypt,od-dump,scene-dump,scene-stats,swf,export,import,m2ps,ogg,qtvr,seng,smgr,x3d,3d,ssl,jack,pulse,odf,isoff,m2ts-mux,dvbx,saf,vobsub,ttxt,od-parse,atsc,avi}"
+
 script:
-  - if [ $TRAVIS_OS_NAME = linux ] || [ $TRAVIS_OS_NAME = linux ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j$(nproc) && $DOINSTALL && $DOTRAVIS; fi
+  - if [ $TRAVIS_OS_NAME = linux ] || [ $TRAVIS_OS_NAME = windows ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j$(nproc) && $DOINSTALL && $DOTRAVIS; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS && make -j$(sysctl -n hw.ncpu) && $DOINSTALL && $DOTRAVIS; fi
 after_success:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then bash <(curl -s https://codecov.io/bash) ; fi
