@@ -33,7 +33,7 @@ addons:
 env:
   - GPAC_CONFIGURE_OPTIONS="--prefix=build/mp4box --enable-debug --static-mp4box" DOINSTALL="make install"
   - GPAC_CONFIGURE_OPTIONS="--enable-debug --static-modules"
-  - GPAC_CONFIGURE_OPTIONS="--enable-{debug,static-bin}"
+  - GPAC_CONFIGURE_OPTIONS="--enable-debug --enable-static-bin"
 matrix:
   include:
     - os: osx
