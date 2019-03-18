@@ -56,7 +56,7 @@ script:
   - ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS
   - if [ $TRAVIS_OS_NAME = linux ]; then make -j$(nproc); fi
   - if [ $TRAVIS_OS_NAME = osx ]; then make -j$(sysctl -n hw.ncpu) ; fi
-  - if [ $TRAVIS_OS_NAME = windows ]; then alias make=ming32-make; make -j$(nproc); fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then alias make=mingw32-make; make -j$(nproc); fi
   - $DOINSTALL
   - $DOTRAVIS
 after_success:
