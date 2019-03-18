@@ -38,9 +38,9 @@ matrix:
   include:
     - os: osx
       env: GPAC_CONFIGURE_OPTIONS="--enable-mem-track" DOINSTALL="sudo make install" AUDIODEV=null
-    - before_script:
-        - "export DISPLAY=:99.0"
-        - sudo service xvfb start
+    - services:
+        - xvfb
+      before_script:
         - sleep 3 # give xvfb some time to start
         - glxinfo # check glx status
       env: GPAC_CONFIGURE_OPTIONS="--enable-mem-track --enable-gcov" DOINSTALL="sudo make install" DOTRAVIS="make travis" AUDIODEV=null
