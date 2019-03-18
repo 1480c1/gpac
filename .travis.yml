@@ -38,6 +38,9 @@ matrix:
   include:
     - os: osx
       env: GPAC_CONFIGURE_OPTIONS="--enable-mem-track" DOINSTALL="sudo make install" AUDIODEV=null
+    - os: windows
+      env: GPAC_CONFIGURE_OPTIONS="--{build,host,target}=x86_64-w64-mingw32 --disable-shared --enable-static --enable-debug --static-mp4box --cross-prefix=x86_64-w64-mingw32-"
+      #--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
     - services:
         - xvfb
       before_script:
@@ -48,16 +51,13 @@ matrix:
     - env: GPAC_CONFIGURE_OPTIONS="--enable-debug --use-{js,mad,xvid,ogg,vorbis,theora,openjpeg,a52}=no --disable-{streaming,isoff-frag,isoff-hint,isoff-write,loader-xmt,loader-bt,loader-isoff,scene-encode,mcrypt,od-dump,scene-dump,scene-stats,swf,export,import,m2ps,ogg,qtvr,seng,smgr,x3d,3d,ssl,jack,pulse,odf,isoff,m2ts-mux,dvbx,saf,vobsub,ttxt,od-parse,atsc,avi}"
     - os: linux
       env: GPAC_CONFIGURE_OPTIONS="--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=i686-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
-    - os: windows
-      env: GPAC_CONFIGURE_OPTIONS="--{build,host,target}=x86_64-w64-mingw32 --disable-shared --enable-static --enable-debug --static-mp4box"
-      #--prefix=build/x86_64-w64-mingw32 --enable-debug --static-mp4box --use-zlib=no --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --extra-ldflags=-Lbuild/x86_64-w64-mingw32/lib" GPAC_CONFIGURE_ECFLAGS="-Ibuild/x86_64-w64-mingw32/include -w -fPIC"
 
 script:
   - if [ $TRAVIS_OS_NAME = windows ]; then alias make=mingw32-make.exe; fi
   - ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS
   - if [ $TRAVIS_OS_NAME = linux ]; then make -j$(nproc); fi
   - if [ $TRAVIS_OS_NAME = osx ]; then make -j$(sysctl -n hw.ncpu) ; fi
-  - if [ $TRAVIS_OS_NAME = windows ]; then make -j$(nproc); fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then mingw32-make.exe -j$(nproc); fi
   - $DOINSTALL
   - $DOTRAVIS
 after_success:
