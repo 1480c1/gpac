@@ -19,7 +19,7 @@ addons:
       - mesa-utils
       - x11proto-{gl,video}-dev
   homebrew:
-    update: true
+    #update: true
     packages:
       - faad2
       - ffmpeg
