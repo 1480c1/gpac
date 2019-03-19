@@ -56,8 +56,8 @@ install:
   - if [ $TRAVIS_OS_NAME = windows ]; then choco install msys2; choco uninstall mingw; PATH="/c/tools/msys64/bin:$PATH"; export MSYSTEM=MINGW64; fi
 script:
   - echo $PATH
-  - if [ $TRAVIS_OS_NAME = windows ]; then echo -e "pacboy -S --ask=20 --noconfirm base-devel:x base-devel:m zlib:x\ncd $TRAVIS_BUILD_DIR\n./configure --extra-cflags='$GPAC_CONFIGURE_ECFLAGS' $GPAC_CONFIGURE_OPTIONS; make -j$(nproc); make install" > $TRAVIS_BUILD_DIR/bash.sh; fi
-  - if [ $TRAVIS_OS_NAME = windows ]; then powershell -noprofile -command Start-Process -NoNewWindow -Wait -FilePath C:/tools/msys64/usr/bin/bash.exe -WorkingDirectory \$env:TRAVIS_BUILD_DIR -ArgumentList "-l","$TRAVIS_BUILD_DIR/bash.sh"; fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then echo -e \"pacboy -S --ask=20 --noconfirm base-devel:x base-devel:m zlib:x\ncd $TRAVIS_BUILD_DIR\n./configure --extra-cflags='$GPAC_CONFIGURE_ECFLAGS' $GPAC_CONFIGURE_OPTIONS; make -j$(nproc); make install\" > $TRAVIS_BUILD_DIR/bash.sh; fi
+  - if [ $TRAVIS_OS_NAME = windows ]; then powershell -noprofile -command Start-Process -NoNewWindow -Wait -FilePath C:/tools/msys64/usr/bin/bash.exe -WorkingDirectory \$env:TRAVIS_BUILD_DIR -ArgumentList \"-l\",\"$TRAVIS_BUILD_DIR/bash.sh\"; fi
   - if [ $TRAVIS_OS_NAME != windows ]; then ./configure --extra-cflags=''"$GPAC_CONFIGURE_ECFLAGS"'' $GPAC_CONFIGURE_OPTIONS; make -j$(if [ $TRAVIS_OS_NAME = osx ]; then sysctl -n hw.ncpu; else nproc; fi); fi
   - $DOINSTALL
   - $DOTRAVIS
