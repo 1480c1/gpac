@@ -1,0 +1,27 @@
+image: Visual Studio 2017
+configuration: Release
+
+install:
+  - git submodule update --init
+  - choco install nasm
+  - choco install nsis -pre
+  - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%
+  - version.bat
+
+build:
+  project: build/gpac.sln
+
+#artifacts:
+#  - path: bin\
+#    name: $(APPVEYOR_PROJECT_NAME)
+#  - path: bin\
+#    name: $(APPVEYOR_PROJECT_NAME)
+
+#deploy:
+#  - provider: GitHub
+#    artifact: $(APPVEYOR_PROJECT_NAME)
+#    auth_token:
+#      secure: 'sf0pQXlPI+X6LoAR8QUJB74jjzNxcLGOXI3H0nbxJq8llvGPG/TAUd87hq5iHZXo'
+#    prerelease: true
+#    on:
+#      appveyor_repo_tag: true
