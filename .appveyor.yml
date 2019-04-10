@@ -23,11 +23,14 @@ for:
       - cinst nsis -pre
       - appveyor DownloadFile https://download.tsi.telecom-paristech.fr/gpac/gpac_extra_libs.zip -FileName extra_libs.zip
       - unzip extra_libs.zip
+      - cd gpac_extra_libs
+      - unzip *.zip
+      - cd ..
       - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%
     before_build:
       - msbuild gpac_extra_libs\build\msvc\BuildAll_vc10.sln /t:Build  /p:Configuration=Release
       - dir gpac_extra_libs\lib\win32\release
-      - gpac_extra_libs\CopyLibs2Public.bat all
+      - gpac_extra_libs\CopyLibs2Public.bat %PLATFORM%
       - version.bat
     build:
       project: build/msvc14/gpac.sln
