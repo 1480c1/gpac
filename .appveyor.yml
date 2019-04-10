@@ -9,7 +9,7 @@ install:
   - version.bat
 
 build:
-  project: build/gpac.sln
+  project: build/msvc14/gpac.sln
 
 #artifacts:
 #  - path: bin\
