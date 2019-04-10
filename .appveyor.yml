@@ -44,7 +44,7 @@ for:
       - cd ..
       - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%
     before_build:
-      - msbuild gpac_extra_libs\build\msvc\BuildAll_vc10.sln /t:Build  /p:Configuration=Release /p:PlatformToolset=v140 /MP /m
+      - ps: msbuild gpac_extra_libs\build\msvc\BuildAll_vc10.sln /t:Build  /p:Configuration=Release /p:Platform=$(if ($env:PLATFORM -eq "x64") {Write-Output "x64"} else {Write-Output "Win32"}) /p:PlatformToolset=v140 /m
       - dir gpac_extra_libs\lib\win32\release
       - gpac_extra_libs\CopyLibs2Public.bat %PLATFORM%
       - version.bat
