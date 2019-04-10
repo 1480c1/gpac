@@ -22,30 +22,29 @@ for:
       - cinst nasm
       - cinst nsis -pre
       - appveyor DownloadFile https://download.tsi.telecom-paristech.fr/gpac/gpac_extra_libs.zip -FileName extra_libs.zip
-      - unzip extra_libs.zip
+      - unzip extra_libs.zip > nul
       - cd gpac_extra_libs
-      - unzip a52dec.zip
-      - unzip dektec_dtapi_201505.zip
-      - unzip faad2.zip
-      - unzip freetype.zip
-      - unzip js.zip
-      - unzip libjpg.zip
-      - unzip libmad.zip
-      - unzip libogg.zip
-      - unzip libpng.zip
-      - unzip libtheora.zip
-      - unzip libvorbis.zip
-      - unzip OpenJPEG.zip
-      - unzip opensvc.zip
-      - unzip PlatinumSDK.zip
-      - unzip SDL_iOS.zip
-      - unzip xvidcore.zip
-      - unzip zlib.zip
-
+      - unzip a52dec.zip > nul
+      - unzip dektec_dtapi_201505.zip > nul
+      - unzip faad2.zip > nul
+      - unzip freetype.zip > nul
+      - unzip js.zip > nul
+      - unzip libjpg.zip > nul
+      - unzip libmad.zip > nul
+      - unzip libogg.zip > nul
+      - unzip libpng.zip > nul
+      - unzip libtheora.zip > nul
+      - unzip libvorbis.zip > nul
+      - unzip OpenJPEG.zip > nul
+      - unzip opensvc.zip > nul
+      - unzip PlatinumSDK.zip > nul
+      - unzip SDL_iOS.zip > nul
+      - unzip xvidcore.zip > nul
+      - unzip zlib.zip > nul
       - cd ..
       - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%
     before_build:
-      - msbuild gpac_extra_libs\build\msvc\BuildAll_vc10.sln /t:Build  /p:Configuration=Release
+      - msbuild gpac_extra_libs\build\msvc\BuildAll_vc10.sln /t:Build  /p:Configuration=Release /p:PlatformToolset=v140 /MP /m
       - dir gpac_extra_libs\lib\win32\release
       - gpac_extra_libs\CopyLibs2Public.bat %PLATFORM%
       - version.bat
