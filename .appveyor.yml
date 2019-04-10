@@ -15,7 +15,8 @@ matrix:
 
 for:
   - matrix:
-      only: vs2017
+      only:
+        - generator: vs2017
     install:
       - git submodule update --init
       - cinst nasm
