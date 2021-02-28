@@ -44,8 +44,10 @@
 #endif
 
 #ifdef GPAC_HAS_HTTP2
+#if defined(_WIN32)
 #if defined(_MSC_VER)
 typedef SSIZE_T ssize_t;
+#endif
 #define NGHTTP2_STATICLIB
 #else
 #if defined(WIN32) && defined(GPAC_STATIC_BUILD)
